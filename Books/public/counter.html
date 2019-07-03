@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .counter {
+      display: flex;
+      flex-direction: column;
+      width: 500px;
+      border: 2px solid black;
+    }
+
+    .counter #digitalNumber {
+      width: 100%;
+      display: block;
+      font-size: 4rem;
+      text-align: center
+    }
+
+    .counter .buttons {
+      width: 100%;
+      display: flex;
+    }
+
+    .counter .buttons .button {
+      width: 50%;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      transition: all .5s ease-in-out;
+      font-size: 3rem;
+      cursor: pointer
+    }
+
+    .counter .buttons .button:hover {
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="counter">
+    <div id="digitalNumber">0</div>
+    <div class="buttons">
+      <div id="incr" class="button">+</div>
+      <div id="decr" class="button">-</div>
+    </div>
+
+  </div>
+  <!-- <div id="app"></div>
+    <script src="/js/components/vendor.js"></script>
+    <script src="/js/components/firstComp.js"></script> -->
+  <script>
+    const {
+      createStore,
+      combineReducers
+    } = Redux;
+
+    // Action Creators
+    const CLICKED_INCR = () => {
+      return {
+        type: "CLICKED_INCR",
+        payload: "Plus"
+      }
+    }
+
+    const CLICKED_DECR = () => {
+      return {
+        type: "CLICKED_DECR",
+        payload: "Minus"
+      }
+    }
+
+    // Reducers
+    let newState
+    const counterReducer = (state = 0, action) => {
+      switch (action.type) {
+        case 'CLICKED_INCR':
+          newState = state + 1
+          return newState
+          breake;
+        case 'CLICKED_DECR':
+          newState = state - 1
+          return newState
+          breake;
+
+        default:
+          return state;
+          breake;
+      }
+
+    }
+
+    const allReducers = combineReducers({
+      counterReducer: counterReducer
+    })
+
+    const store = createStore(allReducers)
+
+    const decBtn = document.getElementById("decr")
+    const incrBtn = document.getElementById("incr")
+
+    incrBtn.addEventListener("click", () => {
+      store.dispatch(CLICKED_INCR())
+      console.log(store.getState().counterReducer)
+      // store.dispatch(CLICKED_DECR())
+    })
+
+
+    decBtn.addEventListener("click", () => {
+      store.dispatch(CLICKED_DECR())
+      console.log(store.getState().counterReducer)
+      // store.dispatch(CLICKED_DECR())
+    })
+
+    const render = () => {
+      const appState = store.getState().counterReducer
+      console.log("=============Current State")
+      console.log(appState)
+      document.getElementById('digitalNumber').innerHTML = appState
+    }
+
+    render()
+    store.subscribe(render)
+
+    console.log(store)
+  </script>
+</body>
+
+</html>
