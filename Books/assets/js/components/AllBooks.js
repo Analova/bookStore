@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { connect } from "react-redux";
+import { openingInfoBook } from "../actions/allAcctions";
 
-export default class AllBooks extends Component {
+class AllBooks extends Component {
   constructor() {
     super();
     this.state = {};
@@ -9,15 +10,25 @@ export default class AllBooks extends Component {
 
   render() {
     return (
-      <section id="myList">
-        <h3>My list of books</h3>
-        <ul>
-          <li>
-            Harry Potter <span className="delete-btn">Delete</span>
-          </li>
-        </ul>
-        <div className="close-list">Close</div>
+      <section className="all-books">
+        <div className="book-conatiner">
+          <div
+            onClick={this.props.openingInfoBook}
+            className="book"
+            style={{
+              backgroundImage: `url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg')`
+            }}
+          />
+        </div>
       </section>
     );
   }
 }
+const mapStateToProps = state => {
+  console.log(state);
+  return state;
+};
+export default connect(
+  mapStateToProps,
+  { openingInfoBook }
+)(AllBooks);

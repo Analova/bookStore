@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 101:
+/***/ 102:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16,11 +16,11 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AllBooks = __webpack_require__(106);
+var _AllBooks = __webpack_require__(107);
 
 var _AllBooks2 = _interopRequireDefault(_AllBooks);
 
-var _MyList = __webpack_require__(107);
+var _MyList = __webpack_require__(108);
 
 var _MyList2 = _interopRequireDefault(_MyList);
 
@@ -72,7 +72,7 @@ exports.default = App;
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88,9 +88,7 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(25);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _reactRedux = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -117,7 +115,10 @@ var Modal = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "section",
-        { id: "modal" },
+        {
+          id: "modal",
+          className: this.props.globalState.popupOpen === true ? "active" : ""
+        },
         _react2.default.createElement(
           "div",
           { className: "modal-container" },
@@ -192,11 +193,15 @@ var Modal = function (_Component) {
   return Modal;
 }(_react.Component);
 
-exports.default = Modal;
+var mapStateToProps = function mapStateToProps(state) {
+  console.log(state);
+  return state;
+};
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Modal);
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -208,9 +213,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(35);
 
-var _appStateReducer = __webpack_require__(109);
+var _appStateReducer = __webpack_require__(110);
 
-var _booksDataReducer = __webpack_require__(110);
+var _booksDataReducer = __webpack_require__(111);
 
 exports.default = (0, _redux.combineReducers)({
   globalState: _appStateReducer.appStateReducer,
@@ -228,6 +233,57 @@ exports.default = (0, _redux.combineReducers)({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var addingBook = exports.addingBook = function addingBook(book) {
+  return {
+    type: "ADD_BOOK",
+    payload: book
+  };
+};
+
+var removingBook = exports.removingBook = function removingBook(book) {
+  return {
+    type: "REMOVE_BOOK",
+    payload: book
+  };
+};
+
+var openingInfoBook = exports.openingInfoBook = function openingInfoBook(book) {
+  return {
+    type: "OPEN_INFO_BOOK",
+    payload: book
+  };
+};
+
+var closingInfoBook = exports.closingInfoBook = function closingInfoBook(book) {
+  return {
+    type: "CLOSE_INFO_BOOK",
+    payload: book
+  };
+};
+
+var openingMyList = exports.openingMyList = function openingMyList() {
+  return {
+    type: "OPEN_MY_LIST"
+  };
+};
+
+var closingMyList = exports.closingMyList = function closingMyList() {
+  return {
+    type: "CLOSE_MY_LIST"
+  };
+};
+
+/***/ }),
+
+/***/ 107:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -235,9 +291,9 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(25);
+var _reactRedux = __webpack_require__(34);
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _allAcctions = __webpack_require__(106);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -260,6 +316,78 @@ var AllBooks = function (_Component) {
   }
 
   _createClass(AllBooks, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "section",
+        { className: "all-books" },
+        _react2.default.createElement(
+          "div",
+          { className: "book-conatiner" },
+          _react2.default.createElement("div", {
+            onClick: this.props.openingInfoBook,
+            className: "book",
+            style: {
+              backgroundImage: "url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg')"
+            }
+          })
+        )
+      );
+    }
+  }]);
+
+  return AllBooks;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  console.log(state);
+  return state;
+};
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { openingInfoBook: _allAcctions.openingInfoBook })(AllBooks);
+
+/***/ }),
+
+/***/ 108:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(14);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(57);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MyList = function (_Component) {
+  _inherits(MyList, _Component);
+
+  function MyList() {
+    _classCallCheck(this, MyList);
+
+    var _this = _possibleConstructorReturn(this, (MyList.__proto__ || Object.getPrototypeOf(MyList)).call(this));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(MyList, [{
     key: "render",
     value: function render() {
       return _react2.default.createElement(
@@ -293,73 +421,6 @@ var AllBooks = function (_Component) {
     }
   }]);
 
-  return AllBooks;
-}(_react.Component);
-
-exports.default = AllBooks;
-
-/***/ }),
-
-/***/ 107:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(14);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(25);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var MyList = function (_Component) {
-  _inherits(MyList, _Component);
-
-  function MyList() {
-    _classCallCheck(this, MyList);
-
-    var _this = _possibleConstructorReturn(this, (MyList.__proto__ || Object.getPrototypeOf(MyList)).call(this));
-
-    _this.state = {};
-    return _this;
-  }
-
-  _createClass(MyList, [{
-    key: "render",
-    value: function render() {
-      return _react2.default.createElement(
-        "section",
-        { className: "all-books" },
-        _react2.default.createElement(
-          "div",
-          { className: "book-conatiner" },
-          _react2.default.createElement("div", {
-            className: "book",
-            style: {
-              backgroundImage: "url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg')"
-            }
-          })
-        )
-      );
-    }
-  }]);
-
   return MyList;
 }(_react.Component);
 
@@ -367,7 +428,7 @@ exports.default = MyList;
 
 /***/ }),
 
-/***/ 108:
+/***/ 109:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -377,42 +438,43 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(25);
+var _reactDom = __webpack_require__(57);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(104);
+var _reactRedux = __webpack_require__(34);
 
 var _redux = __webpack_require__(35);
 
-var _App = __webpack_require__(101);
+var _App = __webpack_require__(102);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _Modal = __webpack_require__(102);
+var _Modal = __webpack_require__(103);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _allReducers = __webpack_require__(103);
+var _allReducers = __webpack_require__(104);
 
 var _allReducers2 = _interopRequireDefault(_allReducers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var store = (0, _redux.createStore)(_allReducers2.default);
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
-  { store: (0, _redux.createStore)(_allReducers2.default) },
+  { store: store },
   _react2.default.createElement(_App2.default, null)
 ), document.getElementById("app"));
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
-  { store: (0, _redux.createStore)(_allReducers2.default) },
+  { store: store },
   _react2.default.createElement(_Modal2.default, null)
 ), document.getElementById("modalroot"));
 
 /***/ }),
 
-/***/ 109:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -452,6 +514,8 @@ var appStateReducer = exports.appStateReducer = function appStateReducer() {
       break;
     case "OPEN_INFO_BOOK":
       newState = Object.assign({}, state, { popupOpen: true });
+      console.log("========= NEW STATE");
+      console.log(newState);
       return newState;
       break;
     case "CLOSE_INFO_BOOK":
@@ -474,7 +538,7 @@ var appStateReducer = exports.appStateReducer = function appStateReducer() {
 
 /***/ }),
 
-/***/ 110:
+/***/ 111:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -537,4 +601,4 @@ var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
 
 /***/ })
 
-},[108]);
+},[109]);
