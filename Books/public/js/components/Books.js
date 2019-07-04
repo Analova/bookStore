@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 83:
+/***/ 101:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12,15 +12,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AllBooks = __webpack_require__(85);
+var _AllBooks = __webpack_require__(106);
 
 var _AllBooks2 = _interopRequireDefault(_AllBooks);
 
-var _MyList = __webpack_require__(86);
+var _MyList = __webpack_require__(107);
 
 var _MyList2 = _interopRequireDefault(_MyList);
 
@@ -72,7 +72,7 @@ exports.default = App;
 
 /***/ }),
 
-/***/ 84:
+/***/ 102:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84,7 +84,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -196,7 +196,30 @@ exports.default = Modal;
 
 /***/ }),
 
-/***/ 85:
+/***/ 103:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(35);
+
+var _appStateReducer = __webpack_require__(109);
+
+var _booksDataReducer = __webpack_require__(110);
+
+exports.default = (0, _redux.combineReducers)({
+  globalState: _appStateReducer.appStateReducer,
+  booksData: _booksDataReducer.booksDataReducer
+});
+
+/***/ }),
+
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -208,7 +231,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -277,7 +300,7 @@ exports.default = AllBooks;
 
 /***/ }),
 
-/***/ 86:
+/***/ 107:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -289,7 +312,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -344,13 +367,13 @@ exports.default = MyList;
 
 /***/ }),
 
-/***/ 87:
+/***/ 108:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -358,19 +381,160 @@ var _reactDom = __webpack_require__(25);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(83);
+var _reactRedux = __webpack_require__(104);
+
+var _redux = __webpack_require__(35);
+
+var _App = __webpack_require__(101);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _Modal = __webpack_require__(84);
+var _Modal = __webpack_require__(102);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
+var _allReducers = __webpack_require__(103);
+
+var _allReducers2 = _interopRequireDefault(_allReducers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById("app"));
-_reactDom2.default.render(_react2.default.createElement(_Modal2.default, null), document.getElementById("modalroot"));
+_reactDom2.default.render(_react2.default.createElement(
+  _reactRedux.Provider,
+  { store: (0, _redux.createStore)(_allReducers2.default) },
+  _react2.default.createElement(_App2.default, null)
+), document.getElementById("app"));
+_reactDom2.default.render(_react2.default.createElement(
+  _reactRedux.Provider,
+  { store: (0, _redux.createStore)(_allReducers2.default) },
+  _react2.default.createElement(_Modal2.default, null)
+), document.getElementById("modalroot"));
+
+/***/ }),
+
+/***/ 109:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var initialState = {
+  myList: [],
+  openInfoBook: {},
+  popupOpen: false,
+  listOpen: false
+};
+
+var newState = void 0;
+
+var appStateReducer = exports.appStateReducer = function appStateReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case "ADD_BOOK":
+      var myList = [].concat(_toConsumableArray(state.myList), [action.payload]);
+      newState = Object.assign({}, state, { myList: myList });
+      return newState;
+      break;
+    case "REMOVE_BOOK":
+      var myList = state.myList.filter(function (item) {
+        return item.id !== action.payload;
+      });
+      newState = Object.assign({}, state, { myList: myList });
+      return newState;
+      break;
+    case "OPEN_INFO_BOOK":
+      newState = Object.assign({}, state, { popupOpen: true });
+      return newState;
+      break;
+    case "CLOSE_INFO_BOOK":
+      newState = Object.assign({}, state, { popupOpen: false });
+      return newState;
+      break;
+    case "OPEN_MY_LIST":
+      newState = Object.assign({}, state, { listOpen: true });
+      return newState;
+      break;
+    case "CLOSE_MY_LIST":
+      newState = Object.assign({}, state, { listOpen: false });
+      return newState;
+      break;
+    default:
+      return state;
+      break;
+  }
+};
+
+/***/ }),
+
+/***/ 110:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
+  return [{
+    id: 1,
+    title: "Harry Potter und der Stein der Weisen",
+    author: "Joanne K. Rowling",
+    category: "thriller",
+    published: "1981",
+    coverURL: "https://images-na.ssl-images-amazon.com/images/I/51ZWeTOlY%2BL._SX327_BO1,204,203,200_.jpg",
+    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+  }, {
+    id: 2,
+    title: "Alice's Adventure in the Wonderland",
+    author: "Joanne K. Rowling",
+    category: "thriller",
+    published: "1981",
+    coverURL: "https://i2.wp.com/theverybesttop10.com/wp-content/uploads/2017/06/The-Top-10-Best-Selling-Books-of-All-Time-2017-8-600x890.jpg?resize=600%2C890",
+    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+  }, {
+    id: 3,
+    title: "Harry Potter und der Stein der Weisen",
+    author: "Joanne K. Rowling",
+    category: "thriller",
+    published: "1981",
+    coverURL: "https://lh3.googleusercontent.com/s_y3ZbAwBvAbvXn9uJO-ZA2iVVXq5wdFmyQWjvM4OdaHhaIdWzP3-mOidKs1F9pCYIpF_nN5TrtANw=s200-rw",
+    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+  }, {
+    id: 4,
+    title: "Wer die Nachtigall stört",
+    author: "Joanne K. Rowling",
+    category: "Roman",
+    published: "1981",
+    coverURL: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRWB8O04y2OBbqoCOEt6jS__-nYJ-YTU8BCraEwVSh8iMV886-wPNcqFZurTgNOa1mS7osZrPKEsKk7yoYBfrhksON_rRrKvCP7ifUbVuSEtf53Iwz0C6Y&usqp=CAc",
+    review: "Wer die Nachtigall stört ist ein im Jahr 1960 erschienener Roman der US-Amerikanerin Harper Lee. Das Werk handelt von Kindheit, Heranwachsen und vom Rassismus in den Südstaaten der USA. Harper Lee wurde für ihr Werk 1961 mit dem Pulitzer-Preis ausgezeichnet."
+  }, {
+    id: 5,
+    title: "Harry Potter und der Stein der Weisen",
+    author: "Joanne K. Rowling",
+    category: "thriller",
+    published: "1981",
+    coverURL: "https://images2.medimops.eu/product/22bb39/M03551551677-large.jpg",
+    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+  }, {
+    id: 6,
+    title: "Harry Potter und der Stein der Weisen",
+    author: "Joanne K. Rowling",
+    category: "thriller",
+    published: "1981",
+    coverURL: "https://red.elbenwald.de/media/image/fa/d3/40/E1051016_15a8b3d4168a7f_600x600.jpg",
+    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+  }];
+};
 
 /***/ })
 
-},[87]);
+},[108]);
