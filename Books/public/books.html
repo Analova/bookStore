@@ -7,18 +7,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/css/main.css" />
   <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
   <style>
-    + {
+    * {
       box-sizing: border-box
     }
 
     #approot {}
 
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .open-list {
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: black;
+      padding: 20px;
+      font-size: 3rem;
+      color: white;
+      cursor: pointer
+    }
+
+    .open-list.closed {
+      display: block;
+
+    }
+
+    .open-list.open {
+      display: none;
+
+    }
+
     .all-books {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 40px 20px;
-      padding: 20px;
+      padding: 10px;
     }
 
     .book-conatiner {
@@ -33,60 +61,143 @@
       background: red;
       width: 200px;
       height: 300px;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    #myList {
+      background: pink;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 100vh;
+      padding: 20px;
+      -webkit-box-shadow: 0px 10px 12px -2px rgba(0, 0, 0, 0.52);
+      -moz-box-shadow: 0px 10px 12px -2px rgba(0, 0, 0, 0.52);
+      box-shadow: 0px 10px 12px -2px rgba(0, 0, 0, 0.52);
+      transform: translate3d(450px, 0, 0);
+      transition: transform 2s ease-in-out;
+    }
+
+    #myList.active {
+      transform: translate3d(0, 0, 0)
+    }
+
+
+    #myList h3 {
+      font-size: 2rem;
+      text-align: centered;
+      margin-bottom: 1.5rem
+    }
+
+    #myList ul {
+      margin: 0 0 1.5rem 20px;
+    }
+
+    #myList ul li {
+      display: list-item;
+      padding: 10px 0;
+
+    }
+
+    #myList ul li span.delete-btn {
+      display: inline-block;
+      padding: 10px;
+      background: red;
+      color: white;
+      border-radius: 5px;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    #myList .close-list {
+      display: block;
+      margin: 0 auto;
+      background: black;
+      color: white;
+      padding: 20px 40px;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
   <div id="approot">
-    <section class="all-books">
-      <div class="book-conatiner">
-        <div class="book">
+    <div class="container">
+      <div class="open-list"><i class="fas fa-bars"></i></div>
+      <section class="all-books">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://images-na.ssl-images-amazon.com/images/I/61yUPI5SD7L._SX258_BO1,204,203,200_.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb19qHQYWzWaS8EaSL6OJvHOAvHH9M7ZOO5W1HcpCqtTpreBoW') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://shop.nationaltrust.org.uk/media/catalog/product/cache/aefcd4d8d5c59ba860378cf3cd2e94da/5/0/50030146.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class=" book-conatiner">
+          <div class="book"
+            style=" background: url('http://d1vzko4h6qahek.cloudfront.net/images/2/books/large/HFRW.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoTQs1TJ3E4ltsr3c5Ya6EFoZBqrWfU4ySqPU1tmPFPEeAhx-r') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://images-na.ssl-images-amazon.com/images/I/51LTVaktaCL._SX378_BO1,204,203,200_.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://realmealrevolution.com/wp-content/uploads/2018/10/rmr-recipe-new-book-525x600.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-      <div class="book-conatiner">
-        <div class="book">
+        <div class="book-conatiner">
+          <div class="book"
+            style=" background: url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg') no-repeat center center;">
 
+          </div>
         </div>
-      </div>
-
-    </section>
+      </section>
+      <section id="myList">
+        <h3>My list of books</h3>
+        <ul>
+          <li>Harry Potter <span class="delete-btn">Delete</span></li>
+          <li>Harry Potter <span class="delete-btn">Delete</span></li>
+          <li>Harry Potter <span class="delete-btn">Delete</span></li>
+          <li>Harry Potter <span class="delete-btn">Delete</span></li>
+          <li>Harry Potter <span class="delete-btn">Delete</span></li>
+        </ul>
+        <div class="close-list">Close</div>
+      </section>
+    </div>
   </div>
 </body>
 

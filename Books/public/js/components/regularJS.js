@@ -6,7 +6,7 @@ webpackJsonp([0],{
 "use strict";
 
 
-console.log('Welcome To The Rocky Stack');
+console.log("Welcome To The MOON");
 
 /***/ })
 
