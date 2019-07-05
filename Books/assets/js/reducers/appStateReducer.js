@@ -20,7 +20,10 @@ export const appStateReducer = (state = initialState, action) => {
       return newState;
       break;
     case "OPEN_INFO_BOOK":
-      newState = Object.assign({}, state, { popupOpen: true });
+      newState = Object.assign({}, state, {
+        openInfoBook: action.payload,
+        popupOpen: true
+      });
       console.log("========= NEW STATE");
       console.log(newState);
       return newState;

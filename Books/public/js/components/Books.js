@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23,6 +23,8 @@ var _AllBooks2 = _interopRequireDefault(_AllBooks);
 var _MyList = __webpack_require__(108);
 
 var _MyList2 = _interopRequireDefault(_MyList);
+
+var _reactRedux = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,7 +51,10 @@ var App = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        { id: "approot" },
+        {
+          id: "approot",
+          className: this.props.globalState.popupOpen === true ? "popupOpen" : " "
+        },
         _react2.default.createElement(
           "div",
           { className: "container" },
@@ -68,11 +73,15 @@ var App = function (_Component) {
   return App;
 }(_react.Component);
 
-exports.default = App;
+var mapStateToProps = function mapStateToProps(state) {
+  console.log(state);
+  return state;
+};
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88,7 +97,9 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(34);
+var _reactRedux = __webpack_require__(25);
+
+var _allAcctions = __webpack_require__(59);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -124,7 +135,7 @@ var Modal = function (_Component) {
           { className: "modal-container" },
           _react2.default.createElement(
             "div",
-            { className: "close-modal" },
+            { className: "close-modal", onClick: this.props.closingInfoBook },
             _react2.default.createElement("i", { className: "fas fa-times" })
           ),
           _react2.default.createElement(
@@ -136,7 +147,9 @@ var Modal = function (_Component) {
               _react2.default.createElement("div", {
                 className: "cover",
                 style: {
-                  backgroundImage: "url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg')"
+                  backgroundImage: "url('" + this.props.globalState.openInfoBook.coverURL + "')",
+                  backgroundRepeat: "noRrepeat",
+                  backgroundPosition: "center"
                 }
               })
             ),
@@ -146,7 +159,7 @@ var Modal = function (_Component) {
               _react2.default.createElement(
                 "h2",
                 null,
-                "Title"
+                this.props.globalState.openInfoBook.title
               ),
               _react2.default.createElement(
                 "div",
@@ -156,7 +169,7 @@ var Modal = function (_Component) {
                   { className: "bold" },
                   " Author: "
                 ),
-                "Merry Brooks"
+                this.props.globalState.openInfoBook.author
               ),
               _react2.default.createElement(
                 "div",
@@ -166,7 +179,7 @@ var Modal = function (_Component) {
                   { className: "bold" },
                   " Category: "
                 ),
-                "Cooking"
+                this.props.globalState.openInfoBook.category
               ),
               _react2.default.createElement(
                 "div",
@@ -176,12 +189,12 @@ var Modal = function (_Component) {
                   { className: "bold" },
                   " Oublished: "
                 ),
-                "1981"
+                this.props.globalState.openInfoBook.published
               ),
               _react2.default.createElement(
                 "p",
                 { className: "review" },
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique amet sit maiores quod, minus quidem, quaerat minima, tempore necessitatibus dignissimos officia molestiae excepturi."
+                this.props.globalState.openInfoBook.review
               )
             )
           )
@@ -197,11 +210,13 @@ var mapStateToProps = function mapStateToProps(state) {
   console.log(state);
   return state;
 };
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Modal);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, {
+  closingInfoBook: _allAcctions.closingInfoBook
+})(Modal);
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -224,57 +239,6 @@ exports.default = (0, _redux.combineReducers)({
 
 /***/ }),
 
-/***/ 106:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var addingBook = exports.addingBook = function addingBook(book) {
-  return {
-    type: "ADD_BOOK",
-    payload: book
-  };
-};
-
-var removingBook = exports.removingBook = function removingBook(book) {
-  return {
-    type: "REMOVE_BOOK",
-    payload: book
-  };
-};
-
-var openingInfoBook = exports.openingInfoBook = function openingInfoBook(book) {
-  return {
-    type: "OPEN_INFO_BOOK",
-    payload: book
-  };
-};
-
-var closingInfoBook = exports.closingInfoBook = function closingInfoBook(book) {
-  return {
-    type: "CLOSE_INFO_BOOK",
-    payload: book
-  };
-};
-
-var openingMyList = exports.openingMyList = function openingMyList() {
-  return {
-    type: "OPEN_MY_LIST"
-  };
-};
-
-var closingMyList = exports.closingMyList = function closingMyList() {
-  return {
-    type: "CLOSE_MY_LIST"
-  };
-};
-
-/***/ }),
-
 /***/ 107:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -291,9 +255,9 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(34);
+var _reactRedux = __webpack_require__(25);
 
-var _allAcctions = __webpack_require__(106);
+var _allAcctions = __webpack_require__(59);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -311,6 +275,22 @@ var AllBooks = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (AllBooks.__proto__ || Object.getPrototypeOf(AllBooks)).call(this));
 
+    _this.showAllBooks = function () {
+      return _this.props.booksData.map(function (b) {
+        return _react2.default.createElement(
+          "div",
+          { key: b.id, className: "book-conatiner" },
+          _react2.default.createElement("div", {
+            onClick: _this.props.openingInfoBook.bind(null, b),
+            className: "book",
+            style: {
+              backgroundImage: "url('" + b.coverURL + "')"
+            }
+          })
+        );
+      });
+    };
+
     _this.state = {};
     return _this;
   }
@@ -321,17 +301,7 @@ var AllBooks = function (_Component) {
       return _react2.default.createElement(
         "section",
         { className: "all-books" },
-        _react2.default.createElement(
-          "div",
-          { className: "book-conatiner" },
-          _react2.default.createElement("div", {
-            onClick: this.props.openingInfoBook,
-            className: "book",
-            style: {
-              backgroundImage: "url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg')"
-            }
-          })
-        )
+        this.showAllBooks()
       );
     }
   }]);
@@ -442,19 +412,19 @@ var _reactDom = __webpack_require__(57);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(34);
+var _reactRedux = __webpack_require__(25);
 
 var _redux = __webpack_require__(35);
 
-var _App = __webpack_require__(102);
+var _App = __webpack_require__(103);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _Modal = __webpack_require__(103);
+var _Modal = __webpack_require__(104);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _allReducers = __webpack_require__(104);
+var _allReducers = __webpack_require__(105);
 
 var _allReducers2 = _interopRequireDefault(_allReducers);
 
@@ -513,7 +483,10 @@ var appStateReducer = exports.appStateReducer = function appStateReducer() {
       return newState;
       break;
     case "OPEN_INFO_BOOK":
-      newState = Object.assign({}, state, { popupOpen: true });
+      newState = Object.assign({}, state, {
+        openInfoBook: action.payload,
+        popupOpen: true
+      });
       console.log("========= NEW STATE");
       console.log(newState);
       return newState;
@@ -553,15 +526,15 @@ var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
     title: "Harry Potter und der Stein der Weisen",
     author: "Joanne K. Rowling",
     category: "thriller",
-    published: "1981",
-    coverURL: "https://images-na.ssl-images-amazon.com/images/I/51ZWeTOlY%2BL._SX327_BO1,204,203,200_.jpg",
+    published: "1999",
+    coverURL: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1556119452i/23546887._SY475_.jpg",
     review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
     id: 2,
     title: "Alice's Adventure in the Wonderland",
     author: "Joanne K. Rowling",
     category: "thriller",
-    published: "1981",
+    published: "1934",
     coverURL: "https://i2.wp.com/theverybesttop10.com/wp-content/uploads/2017/06/The-Top-10-Best-Selling-Books-of-All-Time-2017-8-600x890.jpg?resize=600%2C890",
     review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
@@ -569,23 +542,23 @@ var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
     title: "Harry Potter und der Stein der Weisen",
     author: "Joanne K. Rowling",
     category: "thriller",
-    published: "1981",
-    coverURL: "https://lh3.googleusercontent.com/s_y3ZbAwBvAbvXn9uJO-ZA2iVVXq5wdFmyQWjvM4OdaHhaIdWzP3-mOidKs1F9pCYIpF_nN5TrtANw=s200-rw",
+    published: "1991",
+    coverURL: "https://images-na.ssl-images-amazon.com/images/I/51LJVLfcXBL._SX324_BO1,204,203,200_.jpg",
     review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
     id: 4,
     title: "Wer die Nachtigall stört",
     author: "Joanne K. Rowling",
     category: "Roman",
-    published: "1981",
-    coverURL: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRWB8O04y2OBbqoCOEt6jS__-nYJ-YTU8BCraEwVSh8iMV886-wPNcqFZurTgNOa1mS7osZrPKEsKk7yoYBfrhksON_rRrKvCP7ifUbVuSEtf53Iwz0C6Y&usqp=CAc",
+    published: "1964",
+    coverURL: "https://vignette.wikia.nocookie.net/batman/images/6/68/Batman_The_Man_Bats_Attack.jpg/revision/latest?cb=20140714214700",
     review: "Wer die Nachtigall stört ist ein im Jahr 1960 erschienener Roman der US-Amerikanerin Harper Lee. Das Werk handelt von Kindheit, Heranwachsen und vom Rassismus in den Südstaaten der USA. Harper Lee wurde für ihr Werk 1961 mit dem Pulitzer-Preis ausgezeichnet."
   }, {
     id: 5,
     title: "Harry Potter und der Stein der Weisen",
     author: "Joanne K. Rowling",
     category: "thriller",
-    published: "1981",
+    published: "1971",
     coverURL: "https://images2.medimops.eu/product/22bb39/M03551551677-large.jpg",
     review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
@@ -594,9 +567,60 @@ var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
     author: "Joanne K. Rowling",
     category: "thriller",
     published: "1981",
-    coverURL: "https://red.elbenwald.de/media/image/fa/d3/40/E1051016_15a8b3d4168a7f_600x600.jpg",
+    coverURL: "https://images-na.ssl-images-amazon.com/images/I/51AwdM3XfKL._SX320_BO1,204,203,200_.jpg",
     review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }];
+};
+
+/***/ }),
+
+/***/ 59:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var addingBook = exports.addingBook = function addingBook(book) {
+  return {
+    type: "ADD_BOOK",
+    payload: book
+  };
+};
+
+var removingBook = exports.removingBook = function removingBook(book) {
+  return {
+    type: "REMOVE_BOOK",
+    payload: book
+  };
+};
+
+var openingInfoBook = exports.openingInfoBook = function openingInfoBook(book) {
+  return {
+    type: "OPEN_INFO_BOOK",
+    payload: book
+  };
+};
+
+var closingInfoBook = exports.closingInfoBook = function closingInfoBook(book) {
+  return {
+    type: "CLOSE_INFO_BOOK",
+    payload: book
+  };
+};
+
+var openingMyList = exports.openingMyList = function openingMyList() {
+  return {
+    type: "OPEN_MY_LIST"
+  };
+};
+
+var closingMyList = exports.closingMyList = function closingMyList() {
+  return {
+    type: "CLOSE_MY_LIST"
+  };
 };
 
 /***/ })

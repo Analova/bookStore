@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import AllBooks from "./AllBooks.js";
 import MyList from "./MyList";
+import { connect } from "react-redux";
 
-export default class App extends Component {
+class App extends Component {
   constructor() {
     super();
     this.state = {};
@@ -10,7 +11,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <div id="approot">
+      <div
+        id="approot"
+        className={
+          this.props.globalState.popupOpen === true ? "popupOpen" : " "
+        }
+      >
         <div className="container">
           <div className="open-list">
             <i className="fas fa-bars" />
@@ -22,3 +28,9 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return state;
+};
+export default connect(mapStateToProps)(App);

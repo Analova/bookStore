@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { closingInfoBook } from "../actions/allAcctions.js";
 
 class Modal extends Component {
   constructor() {
@@ -14,7 +15,7 @@ class Modal extends Component {
         className={this.props.globalState.popupOpen === true ? "active" : ""}
       >
         <div className="modal-container">
-          <div className="close-modal">
+          <div className="close-modal" onClick={this.props.closingInfoBook}>
             <i className="fas fa-times" />
           </div>
           <div className="modal-grid">
@@ -22,28 +23,30 @@ class Modal extends Component {
               <div
                 className="cover"
                 style={{
-                  backgroundImage: `url('https://images-na.ssl-images-amazon.com/images/I/51-%2BBEodo6L._SX258_BO1,204,203,200_.jpg')`
+                  backgroundImage: `url('${
+                    this.props.globalState.openInfoBook.coverURL
+                  }')`,
+                  backgroundRepeat: "noRrepeat",
+                  backgroundPosition: "center"
                 }}
               />
             </div>
             <div className="info">
-              <h2>Title</h2>
+              <h2>{this.props.globalState.openInfoBook.title}</h2>
               <div className="info-line">
                 <span className="bold"> Author: </span>
-                Merry Brooks
+                {this.props.globalState.openInfoBook.author}
               </div>
               <div className="info-line">
                 <span className="bold"> Category: </span>
-                Cooking
+                {this.props.globalState.openInfoBook.category}
               </div>
               <div className="info-line">
                 <span className="bold"> Oublished: </span>
-                1981
+                {this.props.globalState.openInfoBook.published}
               </div>
               <p className="review">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Similique amet sit maiores quod, minus quidem, quaerat minima,
-                tempore necessitatibus dignissimos officia molestiae excepturi.
+                {this.props.globalState.openInfoBook.review}
               </p>
             </div>
           </div>
@@ -57,4 +60,9 @@ const mapStateToProps = state => {
   console.log(state);
   return state;
 };
-export default connect(mapStateToProps)(Modal);
+export default connect(
+  mapStateToProps,
+  {
+    closingInfoBook
+  }
+)(Modal);
