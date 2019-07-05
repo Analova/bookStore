@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { closingInfoBook } from "../actions/allAcctions.js";
+import { closingInfoBook, addingBook } from "../actions/allAcctions.js";
 
 class Modal extends Component {
   constructor() {
@@ -48,6 +48,15 @@ class Modal extends Component {
               <p className="review">
                 {this.props.globalState.openInfoBook.review}
               </p>
+              <div
+                className="add-btn"
+                onClick={this.props.addingBook.bind(
+                  null,
+                  this.props.globalState.openInfoBook.title
+                )}
+              >
+                Add To My List
+              </div>
             </div>
           </div>
         </div>
@@ -57,12 +66,12 @@ class Modal extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return state;
 };
 export default connect(
   mapStateToProps,
   {
-    closingInfoBook
+    closingInfoBook,
+    addingBook
   }
 )(Modal);

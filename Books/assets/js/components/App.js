@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AllBooks from "./AllBooks.js";
 import MyList from "./MyList";
 import { connect } from "react-redux";
+import { openingMyList } from "../actions/allAcctions.js";
 
 class App extends Component {
   constructor() {
@@ -18,7 +19,7 @@ class App extends Component {
         }
       >
         <div className="container">
-          <div className="open-list">
+          <div className="open-list" onClick={this.props.openingMyList}>
             <i className="fas fa-bars" />
           </div>
           <AllBooks />
@@ -33,4 +34,9 @@ const mapStateToProps = state => {
   console.log(state);
   return state;
 };
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  {
+    openingMyList
+  }
+)(App);

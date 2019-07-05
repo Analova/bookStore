@@ -24,7 +24,9 @@ var _MyList = __webpack_require__(108);
 
 var _MyList2 = _interopRequireDefault(_MyList);
 
-var _reactRedux = __webpack_require__(25);
+var _reactRedux = __webpack_require__(21);
+
+var _allAcctions = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60,7 +62,7 @@ var App = function (_Component) {
           { className: "container" },
           _react2.default.createElement(
             "div",
-            { className: "open-list" },
+            { className: "open-list", onClick: this.props.openingMyList },
             _react2.default.createElement("i", { className: "fas fa-bars" })
           ),
           _react2.default.createElement(_AllBooks2.default, null)
@@ -77,7 +79,9 @@ var mapStateToProps = function mapStateToProps(state) {
   console.log(state);
   return state;
 };
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, {
+  openingMyList: _allAcctions.openingMyList
+})(App);
 
 /***/ }),
 
@@ -97,9 +101,9 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(25);
+var _reactRedux = __webpack_require__(21);
 
-var _allAcctions = __webpack_require__(59);
+var _allAcctions = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -195,6 +199,14 @@ var Modal = function (_Component) {
                 "p",
                 { className: "review" },
                 this.props.globalState.openInfoBook.review
+              ),
+              _react2.default.createElement(
+                "div",
+                {
+                  className: "add-btn",
+                  onClick: this.props.addingBook.bind(null, this.props.globalState.openInfoBook.title)
+                },
+                "Add To My List"
               )
             )
           )
@@ -207,11 +219,11 @@ var Modal = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  console.log(state);
   return state;
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps, {
-  closingInfoBook: _allAcctions.closingInfoBook
+  closingInfoBook: _allAcctions.closingInfoBook,
+  addingBook: _allAcctions.addingBook
 })(Modal);
 
 /***/ }),
@@ -226,7 +238,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(35);
+var _redux = __webpack_require__(36);
 
 var _appStateReducer = __webpack_require__(110);
 
@@ -255,9 +267,9 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(25);
+var _reactRedux = __webpack_require__(21);
 
-var _allAcctions = __webpack_require__(59);
+var _allAcctions = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -310,7 +322,6 @@ var AllBooks = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  console.log(state);
   return state;
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { openingInfoBook: _allAcctions.openingInfoBook })(AllBooks);
@@ -333,9 +344,13 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(57);
+var _reactDom = __webpack_require__(58);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = __webpack_require__(21);
+
+var _allAcctions = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -353,6 +368,24 @@ var MyList = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (MyList.__proto__ || Object.getPrototypeOf(MyList)).call(this));
 
+    _this.showListOfBooks = function () {
+      return _this.props.globalState.myList.map(function (book) {
+        return _react2.default.createElement(
+          "li",
+          null,
+          book,
+          _react2.default.createElement(
+            "span",
+            {
+              className: "delete-btn",
+              onClick: _this.props.removingBook.bind(null, book)
+            },
+            "Delete"
+          )
+        );
+      });
+    };
+
     _this.state = {};
     return _this;
   }
@@ -362,7 +395,10 @@ var MyList = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "section",
-        { id: "myList" },
+        {
+          id: "myList",
+          className: this.props.globalState.listOpen == true ? "active" : ""
+        },
         _react2.default.createElement(
           "h3",
           null,
@@ -371,20 +407,11 @@ var MyList = function (_Component) {
         _react2.default.createElement(
           "ul",
           null,
-          _react2.default.createElement(
-            "li",
-            null,
-            "Harry Potter ",
-            _react2.default.createElement(
-              "span",
-              { className: "delete-btn" },
-              "Delete"
-            )
-          )
+          this.showListOfBooks()
         ),
         _react2.default.createElement(
           "div",
-          { className: "close-list" },
+          { className: "close-list", onClick: this.props.closingMyList },
           "Close"
         )
       );
@@ -394,7 +421,10 @@ var MyList = function (_Component) {
   return MyList;
 }(_react.Component);
 
-exports.default = MyList;
+var mapStateToProps = function mapStateToProps(state) {
+  return state;
+};
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { closingMyList: _allAcctions.closingMyList, removingBook: _allAcctions.removingBook })(MyList);
 
 /***/ }),
 
@@ -408,13 +438,13 @@ var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(57);
+var _reactDom = __webpack_require__(58);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(25);
+var _reactRedux = __webpack_require__(21);
 
-var _redux = __webpack_require__(35);
+var _redux = __webpack_require__(36);
 
 var _App = __webpack_require__(103);
 
@@ -476,8 +506,8 @@ var appStateReducer = exports.appStateReducer = function appStateReducer() {
       return newState;
       break;
     case "REMOVE_BOOK":
-      var myList = state.myList.filter(function (item) {
-        return item.id !== action.payload;
+      var myList = state.myList.filter(function (book) {
+        return book !== action.payload;
       });
       newState = Object.assign({}, state, { myList: myList });
       return newState;
@@ -523,7 +553,7 @@ Object.defineProperty(exports, "__esModule", {
 var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
   return [{
     id: 1,
-    title: "Harry Potter und der Stein der Weisen",
+    title: "Hulk",
     author: "Joanne K. Rowling",
     category: "thriller",
     published: "1999",
@@ -536,45 +566,45 @@ var booksDataReducer = exports.booksDataReducer = function booksDataReducer() {
     category: "thriller",
     published: "1934",
     coverURL: "https://i2.wp.com/theverybesttop10.com/wp-content/uploads/2017/06/The-Top-10-Best-Selling-Books-of-All-Time-2017-8-600x890.jpg?resize=600%2C890",
-    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+    review: "Harry Potter un der erste Band der.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
     id: 3,
-    title: "Harry Potter und der Stein der Weisen",
+    title: "Spiderman",
     author: "Joanne K. Rowling",
     category: "thriller",
     published: "1991",
     coverURL: "https://images-na.ssl-images-amazon.com/images/I/51LJVLfcXBL._SX324_BO1,204,203,200_.jpg",
-    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+    review: "Harry Potter und der Stein der Weisen ist der erste  von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
     id: 4,
-    title: "Wer die Nachtigall stört",
+    title: "Batman",
     author: "Joanne K. Rowling",
     category: "Roman",
     published: "1964",
     coverURL: "https://vignette.wikia.nocookie.net/batman/images/6/68/Batman_The_Man_Bats_Attack.jpg/revision/latest?cb=20140714214700",
-    review: "Wer die Nachtigall stört ist ein im Jahr 1960 erschienener Roman der US-Amerikanerin Harper Lee. Das Werk handelt von Kindheit, Heranwachsen und vom Rassismus in den Südstaaten der USA. Harper Lee wurde für ihr Werk 1961 mit dem Pulitzer-Preis ausgezeichnet."
+    review: "Wer die Nachtigall stört is Lee. Das Werk handelt von Kindheit, Heranwachsen und vom Rassismus in den Südstaaten der USA. Harper Lee wurde für ihr Werk 1961 mit dem Pulitzer-Preis ausgezeichnet."
   }, {
     id: 5,
-    title: "Harry Potter und der Stein der Weisen",
+    title: "Harry Potter ",
     author: "Joanne K. Rowling",
     category: "thriller",
     published: "1971",
     coverURL: "https://images2.medimops.eu/product/22bb39/M03551551677-large.jpg",
-    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+    review: "Harry Potter u- Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }, {
     id: 6,
-    title: "Harry Potter und der Stein der Weisen",
+    title: "The little prince",
     author: "Joanne K. Rowling",
     category: "thriller",
     published: "1981",
     coverURL: "https://images-na.ssl-images-amazon.com/images/I/51AwdM3XfKL._SX320_BO1,204,203,200_.jpg",
-    review: "Harry Potter und der Stein der Weisen ist der erste Band der siebenteiligen Harry- Potter - Romanreihe von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
+    review: "Harry Potter und der Stein der Weisen ist der erste he von Joanne K.Rowling.Das Buch wurde am 26. Juni 1997 beim britischen Bloomsbury - Verlag mit einer Erstauflage von 500 Exemplaren veröffentlicht, die deutsche Übersetzung erschien am 28. Juli 1998 beim Carlsen Verlag"
   }];
 };
 
 /***/ }),
 
-/***/ 59:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
